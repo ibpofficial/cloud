@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherSphere | Advanced Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dynamic-background">
+        <div class="weather-animation" id="weather-animation"></div>
+        <div class="particles-container"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <h1 class="logo">WeatherSphere</h1>
+                <div class="current-time" id="current-time">--:--</div>
+            </div>
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="search-input" placeholder="Search city or state..." autocomplete="off">
+                    <div class="suggestions" id="suggestions"></div>
+                </div>
+                <button id="search-btn" class="tooltip" data-tooltip="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="location-btn" class="tooltip" data-tooltip="Use my location">
+                    <i class="fas fa-location-arrow"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="weather-card">
+                <div class="weather-header">
+                    <div class="location-info">
+                        <h2 id="city-name">Loading...</h2>
+                        <p id="current-date">-- -- ----</p>
+                        <div class="air-quality" id="air-quality">
+                            <span class="aqi-label">Air Quality: </span>
+                            <span class="aqi-value">--</span>
+                            <span class="aqi-level">(---)</span>
+                        </div>
+                    </div>
+                    <div class="weather-icon-container">
+                        <div class="weather-icon" id="weather-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <p id="weather-description">-- --</p>
+                    </div>
+                </div>
+
+                <div class="weather-details">
+                    <div class="temperature-section">
+                        <div class="current-temp">
+                            <span id="current-temp">--</span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                        <div class="temp-range">
+                            <div class="temp-range-item">
+                                <i class="fas fa-temperature-high"></i>
+                                <span id="max-temp">--°</span>
+                            </div>
+                            <div class="temp-range-item">
+                                <i class="fas fa-temperature-low"></i>
+                                <span id="min-temp">--°</span>
+                            </div>
+                        </div>
+                        <div class="feels-like">
+                            <span>Feels like </span>
+                            <span id="feels-like">--°</span>
+                        </div>
+                    </div>
+
+                    <div class="additional-info">
+                        <div class="info-item humidity">
+                            <div class="info-icon">
+                                <i class="fas fa-tint"></i>
+                                <div class="humidity-bar" id="humidity-bar"></div>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">Humidity</span>
+                                <span class="info-value" id="humidity">--%</span>
+                            </div>
+                        </div>
+                        <div class="info-item wind">
+                            <div class="info-icon">
+                                <i class="fas fa-wind"></i>
+                                <div class="wind-direction-indicator" id="wind-direction-indicator"></div>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">Wind</span>
+                                <span class="info-value" id="wind-speed">-- km/h</span>
+                            </div>
+                        </div>
+                        <div class="info-item pressure">
+                            <div class="info-icon">
+                                <i class="fas fa-compress-alt"></i>
+                                <div class="pressure-gauge" id="pressure-gauge"></div>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">Pressure</span>
+                                <span class="info-value" id="pressure">-- hPa</span>
+                            </div>
+                        </div>
+                        <div class="info-item precipitation">
+                            <div class="info-icon">
+                                <i class="fas fa-cloud-rain"></i>
+                                <div class="precipitation-drops" id="precipitation-drops"></div>
+                            </div>
+                            <div class="info-text">
+                                <span class="info-label">Precipitation</span>
+                                <span class="info-value" id="precipitation">-- mm</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="forecast-container">
+                <div class="section-header">
+                    <h3>5-Day Forecast</h3>
+                    <div class="forecast-toggle">
+                        <button class="active" id="daily-btn">Daily</button>
+                        <button id="hourly-btn">Hourly</button>
+                    </div>
+                </div>
+                <div class="forecast-cards" id="forecast-cards">
+                    <div class="loading">Loading forecast...</div>
+                </div>
+            </div>
+
+            <div class="extra-info">
+                <div class="sun-track">
+                    <div class="sun-path">
+                        <div class="sun-position" id="sun-position"></div>
+                        <div class="sun-marker sunrise" id="sunrise-marker">
+                            <i class="fas fa-sunrise"></i>
+                            <span id="sunrise">--:--</span>
+                        </div>
+                        <div class="sun-marker sunset" id="sunset-marker">
+                            <i class="fas fa-sunset"></i>
+                            <span id="sunset">--:--</span>
+                        </div>
+                    </div>
+                    <div class="daylight-info">
+                        <span id="daylight-duration">--h --m</span>
+                        <span>of daylight</span>
+                    </div>
+                </div>
+                
+                <div class="additional-metrics">
+                    <div class="metric-card uv-index">
+                        <div class="metric-header">
+                            <i class="fas fa-sun"></i>
+                            <span>UV Index</span>
+                        </div>
+                        <div class="uv-meter">
+                            <div class="uv-level" id="uv-level"></div>
+                            <span class="uv-value" id="uv-value">--</span>
+                            <span class="uv-label" id="uv-label">Low</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card visibility">
+                        <div class="metric-header">
+                            <i class="fas fa-eye"></i>
+                            <span>Visibility</span>
+                        </div>
+                        <div class="visibility-meter">
+                            <div class="visibility-bar" id="visibility-bar"></div>
+                            <span class="visibility-value" id="visibility">-- km</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card dew-point">
+                        <div class="metric-header">
+                            <i class="fas fa-water"></i>
+                            <span>Dew Point</span>
+                        </div>
+                        <div class="dew-point-value" id="dew-point">--°</div>
+                        <div class="comfort-level" id="comfort-level">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weather-map">
+                <h3>Weather Map</h3>
+                <div class="map-container" id="map-container">
+                    <div class="loading">Loading weather map...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="app-controls">
+        <div class="unit-toggle">
+            <button class="active" id="celsius-btn">°C</button>
+            <button id="fahrenheit-btn">°F</button>
+        </div>
+        <button class="theme-toggle" id="theme-btn">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script src="geolocation.js"></script>
+</body>
+</html>
